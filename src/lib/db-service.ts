@@ -25,6 +25,8 @@ export const getItems = async (db: SQLiteDatabase, tableName: string): Promise<[
         items.push(result.rows.item(index))
       }
     });
+    console.log("****");
+    console.log("****", items);
     return items;
   } catch (error) {
     console.error(error);
@@ -34,9 +36,8 @@ export const getItems = async (db: SQLiteDatabase, tableName: string): Promise<[
 
 export const saveItems = async (db: SQLiteDatabase, tableName: string, items: any) => {
   const insertQuery =
-    `INSERT OR REPLACE INTO ${tableName}(rowid, value) values` +
-    items.map(i => `(${i.id}, '${i.value}')`).join(',');
-
+    `INSERT OR REPLACE INTO ${tableName}(name) values` +
+    items.map(i => `('${i.value}')`);
   return db.executeSql(insertQuery);
 };
 
